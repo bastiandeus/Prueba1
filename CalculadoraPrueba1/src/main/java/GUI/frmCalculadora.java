@@ -9,20 +9,19 @@ package GUI;
  * @author svalv
  */
 public class frmCalculadora extends javax.swing.JFrame {
-    
+
     private boolean decimal = false;
     private boolean nuevaOperacion = true;
     private double memoria = 0;
     private double resultado = 0;
     private String operacion = "";
-    
+
     public frmCalculadora() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.pantalla.setText("0");
     }
-    
+
     private void calcular() {
         double numeroActual = Double.parseDouble(pantalla.getText());
         switch (operacion) {
@@ -58,7 +57,7 @@ public class frmCalculadora extends javax.swing.JFrame {
         pantalla.setText(String.valueOf(resultado));
         nuevaOperacion = true;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -574,20 +573,20 @@ public class frmCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMrestActionPerformed
 
     private void btnCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCEActionPerformed
-        pantalla.setText("0");
+        pantalla.setText("");
         decimal = false;
     }//GEN-LAST:event_btnCEActionPerformed
 
     private void btnBorrarUnNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarUnNumeroActionPerformed
-        pantalla.setText("0");
-        nuevaOperacion = true;
-        decimal = false;
-        resultado = 0;
-        operacion = "";
+        String textoActual = pantalla.getText();
+        if (!textoActual.isEmpty()) {
+            textoActual = textoActual.substring(0, textoActual.length() - 1);
+            pantalla.setText(textoActual);
+        }
     }//GEN-LAST:event_btnBorrarUnNumeroActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
-        pantalla.setText("0");
+        pantalla.setText("");
         nuevaOperacion = true;
         decimal = false;
         resultado = 0;
@@ -595,27 +594,32 @@ public class frmCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnCambioPositivoNegativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambioPositivoNegativoActionPerformed
-        if (!nuevaOperacion) {
-            double numero = Double.parseDouble(pantalla.getText());
-            numero = -numero;
-            pantalla.setText(String.valueOf(numero));
+        String textoActual = pantalla.getText();
+        if (!textoActual.isEmpty()) {
+            double numeroActual = Double.parseDouble(textoActual);
+            numeroActual = -numeroActual;
+            pantalla.setText(String.valueOf(numeroActual));
         }
     }//GEN-LAST:event_btnCambioPositivoNegativoActionPerformed
 
     private void btnPorcentajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPorcentajeActionPerformed
-        if (!nuevaOperacion) {
-            double numero = Double.parseDouble(pantalla.getText());
-            numero = numero / 100.0;
-            pantalla.setText(String.valueOf(numero));
+        String textoActual = pantalla.getText();
+        if (!textoActual.isEmpty()) {
+            double numeroActual = Double.parseDouble(textoActual);
+            numeroActual = numeroActual * 0.01;
+            pantalla.setText(String.valueOf(numeroActual));
         }
     }//GEN-LAST:event_btnPorcentajeActionPerformed
 
     private void btnMODActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMODActionPerformed
         if (!nuevaOperacion) {
             calcular();
-            decimal = false;
-            operacion = "MOD";
         }
+        operacion = "MOD";
+        resultado = Double.parseDouble(pantalla.getText());
+        pantalla.setText("");
+        decimal = false;
+        nuevaOperacion = true;
     }//GEN-LAST:event_btnMODActionPerformed
 
 
